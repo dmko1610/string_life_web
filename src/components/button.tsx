@@ -12,7 +12,18 @@ export function Button({
 }: ComponentProps<"button"> & {
   variant?: "primary" | "secondary" | "danger";
 }) {
-  return <button></button>;
+  return (
+    <button
+      className={cn(
+        styles,
+        variant === "primary" && "bg-zinc-950 text-white hover:bg-zinc-800",
+        variant === "secondary" && "border bg-white hover:bg-zinc-100",
+        variant === "danger" && "bg-red-600 text-white hover:bg-red-700",
+        className
+      )}
+      {...props}
+    />
+  );
 }
 
 export function ButtonLink({
