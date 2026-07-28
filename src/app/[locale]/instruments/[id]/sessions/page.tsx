@@ -6,22 +6,30 @@ import {
   getSessionDurationMs,
   getTotalPlaytimeMs
 } from "@/lib/domain/playtime";
+import { isLocale } from "@/lib/i18n/config";
+import { dictionaries } from "@/lib/i18n/dictionaries";
+import { notFound } from "next/navigation";
 
 export default async function SessionsPage({
   params
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string; locale: string }>;
 }) {
-  const { id } = await params;
+  const { id, locale } = await params;
+
+  if (!isLocale(locale)) notFound();
+
   const instrument = await getInstrument(id);
   const sessions = await listSessions(id);
+  const dict = dictionaries[locale];
 
   return (
-    <AppShell>
+    <AppShell locale={locale}>
       <div className="mb-6">
         <h1 className="text-2xl">{instrument?.name}</h1>
         <p className="mt-1 text-sm text-zinc-600">
-          Total: {formatPlaytime(getTotalPlaytimeMs(sessions))}
+          {dict.session.total}
+          {formatPlaytime(getTotalPlaytimeMs(sessions))}
         </p>
       </div>
 
@@ -29,10 +37,10 @@ export default async function SessionsPage({
         <table className="w-full text-left text-sm">
           <thead className="bg-zinc-100 text-zinc-600">
             <tr>
-              <th className="p-3">Start</th>
-              <th className="p-3">End</th>
-              <th className="p-3">Duration</th>
-              <th className="p-3">Notes</th>
+              <th className="p-3">{dict.session.startTime}</th>
+              <th className="p-3">{dict.session.endTime}</th>
+              <th className="p-3">{dict.session.duration}</th>
+              <th className="p-3">{dict.session.notes}</th>
             </tr>
           </thead>
           <tbody>
@@ -55,7 +63,7 @@ export default async function SessionsPage({
             {sessions.length === 0 && (
               <tr>
                 <td colSpan={4} className="p-6 text-center text-zinc-600">
-                  No sessions yet.
+                  {dict.session.emptyScreen}
                 </td>
               </tr>
             )}

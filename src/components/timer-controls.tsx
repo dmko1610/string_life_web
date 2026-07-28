@@ -6,7 +6,15 @@ import { useState } from "react";
 import { createSession, updateSession } from "@/lib/api/sessions";
 import { Play, Square } from "lucide-react";
 
-export function TimerControls({ instrumentId }: { instrumentId: string }) {
+export function TimerControls({
+  instrumentId,
+  startText,
+  stopText
+}: {
+  instrumentId: string;
+  startText: string;
+  stopText: string;
+}) {
   const router = useRouter();
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -39,12 +47,12 @@ export function TimerControls({ instrumentId }: { instrumentId: string }) {
   return sessionId ? (
     <Button onClick={stop} disabled={busy} variant="danger">
       <Square className="mr-2 h-4 w-4" />
-      Stop
+      {stopText}
     </Button>
   ) : (
     <Button onClick={start} disabled={busy}>
       <Play className="mr-2 h-4 w-4" />
-      Start
+      {startText}
     </Button>
   );
 }

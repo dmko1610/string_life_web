@@ -8,10 +8,20 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "./button";
+import { dictionaries } from "@/lib/i18n/dictionaries";
+import { Locale, localizedPath } from "@/lib/i18n/config";
 
-export function InstrumentForm({ instrument }: { instrument?: Instrument }) {
+export function InstrumentForm({
+  instrument,
+  locale
+}: {
+  instrument?: Instrument;
+  locale: Locale;
+}) {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const dict = dictionaries[locale];
+  const formDict = dict.instrumentForm;
 
   async function onSubmit(formData: FormData) {
     setError(null);
@@ -28,22 +38,27 @@ export function InstrumentForm({ instrument }: { instrument?: Instrument }) {
     try {
       if (instrument) {
         await updateInstrument(instrument.id, body);
-        router.push(`/instruments/${instrument.id}`);
+        router.push(localizedPath(locale, `/instruments/${instrument.id}`));
       } else {
         const created = await createInstrument(body);
-        router.push(created?.id ? `/instruments/${created.id}` : "/dashboard");
+        router.push(
+          localizedPath(
+            locale,
+            created?.id ? `/instruments/${created.id}` : "/dashboard"
+          )
+        );
       }
 
       router.refresh();
     } catch {
-      setError("Could not save instrument.");
+      setError(formDict.error);
     }
   }
 
   return (
     <form action={onSubmit} className="max-w-xl space-y-5">
       <label className="block">
-        <span className="text-sm font-medium">Name</span>
+        <span className="text-sm font-medium">{formDict.name}</span>
         <input
           name="name"
           required
@@ -53,21 +68,21 @@ export function InstrumentForm({ instrument }: { instrument?: Instrument }) {
       </label>
 
       <label className="block">
-        <span className="text-sm font-medium">Type</span>
+        <span className="text-sm font-medium">{formDict.type}</span>
         <select
           name="type"
           defaultValue={instrument?.type ?? "ELECTRIC"}
           className="mt-1 h-10 w-full rounded-md border px-3"
         >
-          <option value="ELECTRIC">Electric</option>
-          <option value="ACOUSTIC">Acoustic</option>
-          <option value="BASS">Bass</option>
-          <option value="UKULELE">Ukulele</option>
+          <option value="ELECTRIC">{formDict.types.electric}</option>
+          <option value="ACOUSTIC">{formDict.types.acoustic}</option>
+          <option value="BASS">{formDict.types.bass}</option>
+          <option value="UKULELE">{formDict.types.ukulele}</option>
         </select>
       </label>
 
       <label className="block">
-        <span className="text-sm font-medium">String count</span>
+        <span className="text-sm font-medium">{formDict.stringCount}</span>
         <input
           name="stringCount"
           type="number"
@@ -79,7 +94,9 @@ export function InstrumentForm({ instrument }: { instrument?: Instrument }) {
       </label>
 
       <label className="block">
-        <span className="text-sm font-medium">Last string replacement</span>
+        <span className="text-sm font-medium">
+          {formDict.lastStringChangeDate}
+        </span>
         <input
           name="lastStringChangeDate"
           type="date"
@@ -89,7 +106,7 @@ export function InstrumentForm({ instrument }: { instrument?: Instrument }) {
       </label>
 
       <label className="block">
-        <span className="text-sm font-medium">Notes</span>
+        <span className="text-sm font-medium">{formDict.notes}</span>
         <textarea
           name="notes"
           defaultValue={instrument?.notes ?? ""}
@@ -99,7 +116,7 @@ export function InstrumentForm({ instrument }: { instrument?: Instrument }) {
 
       {error && <p className="text-sm text-red-600">{error}</p>}
 
-      <Button type="submit">Save instrument</Button>
+      <Button type="submit">{formDict.save}</Button>
     </form>
   );
 }

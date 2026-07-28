@@ -5,7 +5,13 @@ import { Button } from "./button";
 import { deleteInstrument } from "@/lib/api/instruments";
 import { Trash2 } from "lucide-react";
 
-export function DeleteInstrumentButton({ id }: { id: string }) {
+export function DeleteInstrumentButton({
+  id,
+  text
+}: {
+  id: string;
+  text: string;
+}) {
   const router = useRouter();
 
   async function onDelete() {
@@ -20,7 +26,7 @@ export function DeleteInstrumentButton({ id }: { id: string }) {
   return (
     <Button variant="danger" onClick={onDelete}>
       <Trash2 className="mr-2 h-4 w-4" />
-      Delete
+      {text}
     </Button>
   );
 }
