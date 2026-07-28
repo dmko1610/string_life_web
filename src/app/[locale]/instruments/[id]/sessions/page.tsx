@@ -47,12 +47,12 @@ export default async function SessionsPage({
             {sessions.map((session) => (
               <tr key={session.id} className="border-t">
                 <td className="p-3">
-                  {new Date(session.startTime).toLocaleString()}
+                  {new Date(session.startTime).toLocaleString(locale)}
                 </td>
                 <td className="p-3">
                   {session.endTime
-                    ? new Date(session.endTime).toLocaleString()
-                    : "Active"}
+                    ? new Date(session.endTime).toLocaleString(locale)
+                    : dict.session.active}
                 </td>
                 <td className="p-3">
                   {formatPlaytime(getSessionDurationMs(session))}

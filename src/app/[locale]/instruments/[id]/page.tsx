@@ -58,7 +58,12 @@ export default async function InstrumentPage({
           >
             {dict.instrument.edit}
           </ButtonLink>
-          <DeleteInstrumentButton id={id} text={dict.instrument.delete} />
+          <DeleteInstrumentButton
+            id={id}
+            locale={locale}
+            text={dict.instrument.delete}
+            confirmText={dict.instrument.deleteConfirm}
+          />
         </div>
       </div>
 
@@ -74,14 +79,18 @@ export default async function InstrumentPage({
         <div className="rounded-lg border bg-white p-5">
           <p className="text-sm text-zinc-600">{dict.instrument.stringAge}</p>
           <p className="mt-2 text-2xl font-semibold">
-            {days === null ? "Unknown" : `${days} ${dict.instrument.days}`}
+            {days === null
+              ? dict.instrument.unknown
+              : `${days} ${dict.instrument.days}`}
           </p>
         </div>
         <div className="rounded-lg border bg-white p-5">
           <p className="text-sm text-zinc-600">
             {dict.instrument.replacementStatus}
           </p>
-          <p className="mt-2 text-2xl font-semibold capitalize">{status}</p>
+          <p className="mt-2 text-2xl font-semibold">
+            {dict.instrument.statuses[status]}
+          </p>
         </div>
       </div>
 

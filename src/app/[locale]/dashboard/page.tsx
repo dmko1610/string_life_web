@@ -66,7 +66,7 @@ export default async function DashboardPage({
                 </div>
                 <p className="mt-6 text-sm text-zinc-600">
                   {days === null
-                    ? "String change unknown"
+                    ? dict.instrument.stringChangeUnknown
                     : `${days} ${dict.instrument.daysSinceReplacement}`}
                 </p>
               </a>

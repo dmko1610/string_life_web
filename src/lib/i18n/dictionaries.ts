@@ -15,18 +15,29 @@ export const dictionaries = {
     instrument: {
       sessions: "Sessions",
       daysSinceReplacement: "days since replacement",
+      stringChangeUnknown: "String change unknown",
+      unknown: "Unknown",
       strings: "strings",
       edit: "Edit",
       delete: "Delete",
+      deleteConfirm: "Delete this instrument?",
       start: "Start",
       stop: "Stop",
       totalPlaytime: "Total playtime",
       replacementStatus: "Replacement status",
       stringAge: "String age",
       days: "days",
-      notes: "Notes"
+      notes: "Notes",
+      statuses: {
+        unknown: "Unknown",
+        fresh: "Fresh",
+        soon: "Replace soon",
+        overdue: "Overdue"
+      }
     },
     instrumentForm: {
+      titleNew: "Add Instrument",
+      titleEdit: "Edit Instrument",
       name: "Name",
       type: "Type",
       stringCount: "String count",
@@ -47,7 +58,8 @@ export const dictionaries = {
       endTime: "End",
       duration: "Duration",
       notes: "Notes",
-      emptyScreen: "No sessions yet.",
+      active: "Active",
+      emptyScreen: "No sessions yet."
     }
   },
   ru: {
@@ -66,18 +78,29 @@ export const dictionaries = {
     instrument: {
       sessions: "Сессии",
       daysSinceReplacement: "дней с замены",
+      stringChangeUnknown: "Дата замены неизвестна",
+      unknown: "Неизвестно",
       strings: "струн",
       edit: "Редактировать",
       delete: "Удалить",
+      deleteConfirm: "Удалить этот инструмент?",
       start: "Старт",
       stop: "Стоп",
       totalPlaytime: "Общее время игры",
       replacementStatus: "Статус замены струн",
       stringAge: "Возраст струн",
       days: "дней",
-      notes: "Заметки"
+      notes: "Заметки",
+      statuses: {
+        unknown: "Неизвестно",
+        fresh: "Свежие",
+        soon: "Скоро заменить",
+        overdue: "Пора заменить"
+      }
     },
     instrumentForm: {
+      titleNew: "Добавить инструмент",
+      titleEdit: "Редактировать инструмент",
       name: "Название",
       type: "Тип",
       stringCount: "Количество струн",
@@ -98,7 +121,8 @@ export const dictionaries = {
       endTime: "Конец",
       duration: "Длительность",
       notes: "Заметки",
-      emptyScreen: "Ещё нет сессий",
+      active: "Активна",
+      emptyScreen: "Ещё нет сессий"
     }
   }
 } as const;
